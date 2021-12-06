@@ -11,29 +11,24 @@ public class WordFrequencyGame {
 
     public String getResult(String input){
 
+        try {
 
-        if (input.split(SPACE_REGEX).length==1) { // TODO: constant regex
-            return input + " 1";
-        } else {
+            List<WordCount> wordCountList = calculateWordFrequency(input);
 
-            try {
+            wordCountList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount()); // TODO: split new function
 
-                List<WordCount> wordCountList = calculateWordFrequency(input);
-
-                wordCountList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount()); // TODO: split new function
-
-                StringJoiner output = new StringJoiner("\n"); // TODO: Don't use string joiner
-                for (WordCount wordCount : wordCountList) {
-                    String outputLine = wordCount.getValue() + " " +wordCount.getWordCount(); // TODO: split new function
-                    output.add(outputLine);
-                }
-                return output.toString();
-            } catch (Exception e) {  // TODO: Why calculate error? -> x delete it, may have other reasons to exist
-
-
-                return "Calculate Error";
+            StringJoiner output = new StringJoiner("\n"); // TODO: Don't use string joiner
+            for (WordCount wordCount : wordCountList) {
+                String outputLine = wordCount.getValue() + " " +wordCount.getWordCount(); // TODO: split new function
+                output.add(outputLine);
             }
+            return output.toString();
+        } catch (Exception e) {  // TODO: Why calculate error? -> x delete it, may have other reasons to exist
+
+
+            return "Calculate Error";
         }
+
     }
 
     private List<WordCount> calculateWordFrequency(String input) {
