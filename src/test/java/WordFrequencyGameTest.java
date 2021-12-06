@@ -49,9 +49,6 @@ public class WordFrequencyGameTest {
     @Test
     public void should_throw_exception_when_getResult_given_invalidInput() throws Exception {
         //Given
-        String inputStr = null;
-
-        // when
         validate_Input_words_process_to_expected_word(null, "Calculate Error");
 
     }
