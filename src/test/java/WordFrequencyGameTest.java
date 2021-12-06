@@ -1,4 +1,5 @@
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.in;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,16 @@ public class WordFrequencyGameTest {
         String inputStr = "the the is";
         String expectResult = "the 2\nis 1";
         validate_Input_words_process_to_expected_word(inputStr, expectResult);
+    }
+
+    @Test
+    public void should_throw_exception_when_getResult_given_invalidInput() throws Exception {
+        //Given
+        String inputStr = null;
+
+        // when
+        validate_Input_words_process_to_expected_word(null, "Calculate Error");
+
     }
 
     @Test
