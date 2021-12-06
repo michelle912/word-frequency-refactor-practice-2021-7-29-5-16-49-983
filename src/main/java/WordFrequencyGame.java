@@ -14,21 +14,13 @@ public class WordFrequencyGame {
         try {
 
             List<WordCount> wordCountList = calculateWordFrequency(input);
+            
+            wordCountList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
-            wordCountList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount()); // TODO: split new function
-
-            StringJoiner output = new StringJoiner("\n"); // TODO: Don't use string joiner
-            for (WordCount wordCount : wordCountList) {
-                String outputLine = wordCount.getValue() + " " +wordCount.getWordCount(); // TODO: split new function
-                output.add(outputLine);
-            }
-            return output.toString();
-        } catch (Exception e) {  // TODO: Why calculate error? -> x delete it, may have other reasons to exist
-
-
+            return generateOutput(wordCountList);
+        } catch (Exception e) {
             return "Calculate Error";
         }
-
     }
 
     private List<WordCount> calculateWordFrequency(String input) {
@@ -47,6 +39,13 @@ public class WordFrequencyGame {
 
     private List<String> splitString(String input) {
         return Arrays.asList(input.split(SPACE_REGEX));
+    }
+
+    private String generateOutput(List<WordCount> wordCountList) {
+        return wordCountList
+                .stream()
+                .map(wordCount -> wordCount.getValue() + " " +wordCount.getWordCount())
+                .collect(Collectors.joining("\n"));
     }
 
 }
