@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
 
@@ -17,24 +14,7 @@ public class WordFrequencyGame {
 
             try {
 
-                //split the input string with 1 to n pieces of spaces
-                String[] wordList = input.split(SPACE_REGEX); // TODO: split new function
-
-                List<WordCount> wordCountList = new ArrayList<>();
-                for (String word : wordList) {
-                    WordCount wordCount = new WordCount(word, 1); // TODO: inline for loop
-                    wordCountList.add(wordCount);
-                }
-
-                //get the map for the next step of sizing the same word
-                Map<String, List<WordCount>> wordToWordCountMap =getListMap(wordCountList);
-
-                List<WordCount> list = new ArrayList<>();
-                for (Map.Entry<String, List<WordCount>> entry : wordToWordCountMap.entrySet()){
-                    WordCount wordCount = new WordCount(entry.getKey(), entry.getValue().size());
-                    list.add(wordCount);
-                }
-                wordCountList = list;
+                List<WordCount> wordCountList = calculateWordFrequency(input);
 
                 wordCountList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount()); // TODO: split new function
 
@@ -52,6 +32,31 @@ public class WordFrequencyGame {
         }
     }
 
+    private List<WordCount> calculateWordFrequency(String input) {
+        //split the input string with 1 to n pieces of spaces
+        String[] wordList = splitString(input);
+
+        List<WordCount> wordCountList = new ArrayList<>();
+        for (String word : wordList) {
+            WordCount wordCount = new WordCount(word, 1); // TODO: inline for loop
+            wordCountList.add(wordCount);
+        }
+
+        //get the map for the next step of sizing the same word
+        Map<String, List<WordCount>> wordToWordCountMap =getListMap(wordCountList);
+
+        List<WordCount> list = new ArrayList<>();
+        for (Map.Entry<String, List<WordCount>> entry : wordToWordCountMap.entrySet()){
+            WordCount wordCount = new WordCount(entry.getKey(), entry.getValue().size());
+            list.add(wordCount);
+        }
+        wordCountList = list;
+        return wordCountList;
+    }
+
+    private String[] splitString(String input) {
+        return input.split(SPACE_REGEX);
+    }
 
     private Map<String,List<WordCount>> getListMap(List<WordCount> wordCountList) {
         Map<String, List<WordCount>> wordToWordCountMap = new HashMap<>();
